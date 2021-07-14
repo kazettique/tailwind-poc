@@ -1,46 +1,184 @@
-import React from 'react';
-import logo from './logo.svg';
+import { ReactElement } from 'react';
 import './App.css';
-import 'tailwindcss/tailwind.css';
 
-function App() {
+import CustomGenericTable from './components/CustomGenericTable';
+
+import { ColumnDefinitionType, GenericTableClassNameType } from './components/CustomGenericTable/types';
+
+// * experiment
+type BulmaTableStyleParams = {
+  tableColor: string;
+  tableBackgroundColor: string;
+
+  tableCellBorder: string;
+  tableCellBorderWidth: string;
+  tableCellPadding: string;
+  tableCellHeadingColor: string;
+
+  tableHeadCellBorderWidth: string;
+  tableHeadCellColor: string;
+  tableFootCellBorderWidth: string;
+  tableFootCellColor: string;
+
+  tableHeadBackgroundColor: string;
+  tableBodyBackgroundColor: string;
+  tableFootBackgroundColor: string;
+
+  tableRowHoverBackgroundColor: string;
+  tableRowActiveBackgroundColor: string;
+  tableRowActiveColor: string;
+
+  tableStripedRowEvenBackgroundColor: string;
+  tableStripedRowEvenHoverBackgroundColor: string;
+
+  tableColors: string;
+};
+
+// * experiment
+type GenericCustomStyles = {
+  global: {
+    backgroundColor: string;
+    color: string;
+  };
+  tableCell: {
+    border: string;
+    borderWidth: string;
+    padding: string;
+    headingColor: string;
+  };
+  head: {
+    backgroundColor: string;
+    cell: {
+      color: string;
+      borderWidth: string;
+    };
+  };
+  body: {
+    backgroundColor: string;
+  };
+  footer: {
+    backgroundColor: string;
+    cell: {
+      color: string;
+      borderWidth: string;
+    };
+  };
+};
+
+function App(): ReactElement {
   // dummy table data
   const tableData = Array(100)
     .fill('')
     .map((_, index) => index);
 
+  const data: Cat[] = [
+    {
+      name: 'Mittens',
+      color: 'black',
+      age: 2,
+      gender: 'female',
+      activityLevel: 'hight',
+      favoriteFood: 'milk',
+    },
+    {
+      name: 'Mons',
+      color: 'grey',
+      age: 2,
+      gender: 'male',
+      favoriteFood: 'old socks',
+      activityLevel: 'medium',
+    },
+    {
+      name: 'Luna',
+      color: 'black',
+      age: 2,
+      gender: 'female',
+      activityLevel: 'medium',
+      favoriteFood: 'fish',
+    },
+    {
+      name: 'Bella',
+      color: 'grey',
+      age: 1,
+      gender: 'female',
+      activityLevel: 'high',
+      favoriteFood: 'mice',
+    },
+    {
+      name: 'Oliver',
+      color: 'orange',
+      age: 1,
+      gender: 'male',
+      activityLevel: 'low',
+      favoriteFood: 'fish',
+    },
+  ];
+
+  const data2: Cat[] = tableData.map((item, index) => ({
+    name: `Bella-${item}`,
+    color: 'grey',
+    age: item + 1,
+    gender: item % 2 === 0 ? 'female' : 'male',
+    activityLevel: 'high',
+    favoriteFood: 'mice',
+  }));
+
+  const columns: ColumnDefinitionType<Cat, keyof Cat>[] = [
+    {
+      key: 'name',
+      header: 'Name',
+      width: 150,
+    },
+    {
+      key: 'color',
+      header: 'Color',
+    },
+    {
+      key: 'age',
+      header: 'Age in years',
+    },
+    {
+      key: 'gender',
+      header: 'Gender',
+    },
+    {
+      key: 'activityLevel',
+      header: 'activity Level',
+    },
+    {
+      key: 'favoriteFood',
+      header: 'favorite Food',
+    },
+  ];
+
+  interface Cat {
+    name: string;
+    age: number;
+    gender: string;
+    color: string;
+    activityLevel?: string; // optional, same as string | undefined
+    favoriteFood?: string; // optional, same as string | undefined
+  }
+
+  // const customClassName: GenericTableClassNameType = {
+  //   tableClassName: 'border border-yellow-500 text-gray-600',
+  //   headerClassName: {
+  //     thClassName: 'border border-yellow-500',
+  //     trClassName: 'bg-yellow-300',
+  //   },
+  //   rowClassName: {
+  //     trClassName: 'bg-yellow-200',
+  //     tdClassName: 'border border-yellow-500',
+  //   },
+  // };
+
   return (
-    <div className="App">
-      <div className="my-3">
-        <button
-          type="button"
-          className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-green-500 hover:bg-green-700"
-        >
-          Green-500
-        </button>
-        <button
-          type="button"
-          className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-shitty-gold hover:bg-light-yellow hover:text-gray-900"
-        >
-          Shitty
-        </button>
-      </div>
-      <div className="my-3">
-        <button
-          type="button"
-          className="py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-submit hover:bg-cancel hover:text-gray-900"
-        >
-          Submit
-        </button>
-        <button
-          type="button"
-          className="py-2 px-4 font-semibold rounded-lg shadow-md text-black bg-cancel hover:bg-submit hover:text-gray-900"
-        >
-          Cancel
-        </button>
+    <div className="bg-gray-700 w-screen h-screen text-gray-300">
+      <div className="w-1/2 my-0 mx-auto h-full">
+        <CustomGenericTable data={data2} columns={columns} />
       </div>
 
-      <div className="flex flex-col h-full" style={{ height: 800 }}>
+      {/* <div className="flex flex-col h-full" style={{ height: 800 }}>
         <div className="flex-grow overflow-auto">
           <table className="relative w-full border">
             <thead>
@@ -88,7 +226,7 @@ function App() {
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

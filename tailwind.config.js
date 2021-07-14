@@ -8,10 +8,10 @@ module.exports = {
   },
   plugins: [],
   theme: {
-    fontFamily: {
-      sans: ['Times New Roman'],
-      serif: ['Times New Roman'],
-    },
+    // fontFamily: {
+    //   sans: ['Times New Roman'],
+    //   serif: ['Times New Roman'],
+    // },
     extend: {
       colors: {
         'shitty-gold': '#a05211',

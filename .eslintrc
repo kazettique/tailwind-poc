@@ -30,6 +30,9 @@
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",
     "jsx-a11y/anchor-is-valid": "off",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/no-array-index-key": "off",
     "prettier/prettier": [
       "error",
       {
